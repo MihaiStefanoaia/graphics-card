@@ -1,0 +1,22 @@
+{
+    "files.associations": {
+        "units.h": "c",
+        "visitor.h": "c",
+        "osdep.h": "c",
+        "pci.h": "c",
+        "any": "c",
+        "array": "c",
+        "chrono": "c",
+        "compare": "c",
+        "functional": "c",
+        "ratio": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "variant": "c",
+        "string": "c",
+        "string_view": "c",
+        "stddef.h": "c",
+        "*.inc": "c"
+    }
+}

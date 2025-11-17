@@ -32,12 +32,11 @@ FLAGS register structure:
 |  0 | Carry / Overflow |
 |  1 | Result Zero  |
 |  2 | Sign Change  |
-|  2 | Sign Change  |
 |  3 | Core Enabled |
 |  4-31 | Reserved  |
 
 Each core has 2048 bytes of high speed local memory, mapped starting at address 0 and can be accessed like regular memory - OpenCL "private" memory.
-Each warp has a 16 kilobytes of shared local memory, of which 14 are accessible to the executor cores starting at address 128. The first 128 bytes are exclusive to the warp controller (maybe?) - OpenCL "local" memory.
+Each warp has a 16 kilobytes of shared local memory, of which 14 are accessible to the executor cores starting at address 0x800. The first 2 kilobytes are exclusive to the warp controller (maybe?) - OpenCL "local" memory.
 
 
 ## Architecture layers
@@ -75,10 +74,10 @@ Each warp has a 16 kilobytes of shared local memory, of which 14 are accessible 
 | bitwise or  | OR  \<R: r\> \<A: r/m\> \<B: r/m\> | R = A \| B |
 | bitwise not | NOT \<R: r\> \<A: r/m\> | R = ~A |
 | conditional core disable | CDS \<C: m\> | disable core if C \| FLAGS == 0xFFFF |
-| core enable | CEN | enable all cores |
+| core enable | CEN | enable all cores; must wait for pipe flush |
 | 4x4 matmul | MMFBF \<R: m\> \<A: m\> \<B: m\> | Multiply 4x4 matrix at location A by the one at location B, and save it in R |
-| dot product | VDOTP \<R: r\> \<L: r\> \<A: m\> \<As: r\> \<B: m\> \<Bs: r\> | Dot product of vectors A and B of length L, stepping each vector by As and Bs respectively |
-| 3d cross product | VXP3D \<R: m\> \<A: m\> \<B: m\> | cross product of 3D vectors A and B |
+| dot product | VDOTP \<type\> \<R: r\> \<L: r\> \<A: m\> \<As: r\> \<B: m\> \<Bs: r\> | Dot product of vectors A and B of length L, stepping each vector by As and Bs respectively |
+| 3d cross product | VXP3D \<type\> \<R: m\> \<A: m\> \<B: m\> | cross product of 3D vectors A and B |
 
 
 ### Non-broadcast instructions - will likely be canned 
